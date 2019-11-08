@@ -1,9 +1,20 @@
 import React from 'react'
+import {Route} from 'react-router-dom'
+import {TabBar} from 'antd-mobile'
 
 export default class Home extends React.Component {
-    render() {
-        return (
-            <div>首页</div>
-        )
-    }
+	state = {
+		selectedTab: 'redTab',
+		hidden: false,
+		fullScreen: false,
+	}
+
+	render() {
+		return (
+		  <div>
+			  <Route path="/home/news"/>
+
+		  </div>
+		)
+	}
 }
