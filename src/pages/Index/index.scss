@@ -16,3 +16,18 @@
         text-align: center;
     }
 }
+
+.group {
+    background-color: #eee;
+    padding: 0 10px 10px;
+    .title {
+        padding: 12px 0;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        .more {
+            font-weight: normal;
+            color: #4e4e4e;
+        }
+    }
+}

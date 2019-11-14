@@ -1,0 +1,25 @@
+.home {
+  //margin-bottom: 50px;
+
+
+  .content {
+
+    position: static;
+    //overflow-y: auto;
+    -webkit-overflow-scrolling:touch;
+    overflow-y:scroll;
+    .index {
+      min-height: calc(100% + 1px);
+    }
+  }
+
+  .iconfont {
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .am-tab-bar-bar {
+    position: fixed;
+    bottom: 0;
+  }
+}
