@@ -37,32 +37,9 @@
     To begin the development, run `npm start` or `yarn start`.
     To create a production bundle, use `npm run build` or `yarn build`.
   -->
-<!--<script>-->
-<!--	var overscroll = function (el) {-->
-<!--		el.addEventListener('touchstart', function () {-->
-<!--			var top = el.scrollTop-->
-<!--			  , totalScroll = el.scrollHeight-->
-<!--			  , currentScroll = top + el.offsetHeight;-->
-<!--			if (top === 0) {-->
-<!--				el.scrollTop = 1;-->
-<!--			} else if (currentScroll === totalScroll) {-->
-<!--				el.scrollTop = top - 1;-->
-<!--			}-->
-<!--		});-->
-
-<!--		el.addEventListener('touchmove', function (evt) {-->
-<!--			if (el.offsetHeight < el.scrollHeight)-->
-<!--				evt._isScroller = true;-->
-<!--		});-->
-<!--	}-->
-
-<!--	overscroll(document.querySelector('.home'));-->
-<!--	document.body.addEventListener('touchmove', function (evt) {-->
-<!--		if (!evt._isScroller) {-->
-<!--			evt.preventDefault();-->
-<!--		}-->
-<!--	});-->
-<!--</script>-->
+<script>
+	window.REACT_APP_URL = 'http://192.168.199.181:8080'
+</script>
 </body>
 
 </html>

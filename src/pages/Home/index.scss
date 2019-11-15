@@ -1,17 +1,7 @@
 .home {
-  //margin-bottom: 50px;
 
-
-  .content {
-
-    position: static;
-    //overflow-y: auto;
-    -webkit-overflow-scrolling:touch;
-    overflow-y:scroll;
-    .index {
-      min-height: calc(100% + 1px);
-    }
-  }
+  overflow-x: hidden;
+  padding-bottom: 50px;
 
   .iconfont {
     font-weight: 700;
@@ -21,5 +11,6 @@
   .am-tab-bar-bar {
     position: fixed;
     bottom: 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
   }
 }

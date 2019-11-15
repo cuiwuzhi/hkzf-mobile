@@ -17,7 +17,10 @@ const tabBarItems = [
 export default class Home extends React.Component {
 	state = {
 		selectedTab: this.props.location.pathname, // 选中的tab
-		contentHeight: document.documentElement.clientHeight || document.body.clientHeight
+		contentHeight: document.documentElement.clientHeight || document.body.clientHeight // 当前设备可视区域高度
+	}
+
+	componentDidMount() {
 	}
 
 	componentDidUpdate(preProps) {
@@ -49,12 +52,10 @@ export default class Home extends React.Component {
 	render() {
 		return (
 		  <div className="home">
-			  <div className="content" style={{height: this.state.contentHeight - 50}}>
-				  <Route exact path="/home" component={Index}/>
-				  <Route path="/home/findHouse" component={FindHouse}/>
-				  <Route path="/home/news" component={News}/>
-				  <Route path="/home/profile" component={Profile}/>
-			  </div>
+			  <Route exact path="/home" component={Index}/>
+			  <Route path="/home/findHouse" component={FindHouse}/>
+			  <Route path="/home/news" component={News}/>
+			  <Route path="/home/profile" component={Profile}/>
 			  <TabBar
 				tintColor="#21b97a"
 				barTintColor="white"

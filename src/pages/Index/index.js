@@ -1,5 +1,5 @@
 import React from 'react'
-import {Carousel, Flex, Grid} from 'antd-mobile'
+import {Carousel, Flex, Grid, WingBlank} from 'antd-mobile'
 import './index.scss'
 import axios from 'axios'
 // 导航栏图片
@@ -16,21 +16,19 @@ const navs = [
 	{id: 4, img: Nav4, title: '出租', path: '/home/findHouse'}
 ]
 
-const data = Array.from(new Array(9)).map((_val, i) => ({
-	icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
-	text: `name${i}`,
-}));
-
 export default class Index extends React.Component {
 	state = {
+		APIURL: window.REACT_APP_URL,
 		swipers: [], // 轮播图数据
 		isSwiperLoaded: false, // 轮播图数据是否加载完成
-		groups: [] // 租房小组数据
+		groups: [], // 租房小组数据
+		news: [] // 新闻资讯数据
 	}
 
 	componentDidMount() {
 		this.getSwipers()
 		this.getGroups()
+		this.getNews()
 	}
 
 	// 获取轮播图
@@ -51,6 +49,14 @@ export default class Index extends React.Component {
 		})
 		this.setState({
 			groups: res.body
+		})
+	}
+
+	// 获取最新资讯
+	async getNews() {
+		const res = await axios.get(`${window.REACT_APP_URL}/home/news?area=AREA%7C88cff55c-aaa4-e2e0`)
+		this.setState({
+			news: res.data.body
 		})
 	}
 
@@ -78,6 +84,28 @@ export default class Index extends React.Component {
 		)
 	}
 
+	// 渲染最新资讯
+	renderNews() {
+		return this.state.news.map(item => (
+		  <div className="news-item" key={item.id}>
+			  <div className="imgwrap">
+				  <img
+					className="img"
+					src={`${window.REACT_APP_URL}${item.imgSrc}`}
+					alt=""
+				  />
+			  </div>
+			  <Flex className="content" direction="column" justify="between">
+				  <h3 className="title">{item.title}</h3>
+				  <Flex className="info" justify="between">
+					  <span>{item.from}</span>
+					  <span>{item.date}</span>
+				  </Flex>
+			  </Flex>
+		  </div>
+		))
+	}
+
 	render() {
 		return (
 		  <div className="index">
@@ -102,7 +130,27 @@ export default class Index extends React.Component {
 					  租房小组 <span className="more">更多</span>
 				  </h3>
 				  {/* 宫格组件 */}
-				  <Grid data={data}/>
+				  <Grid
+					data={this.state.groups}
+					columnNum={2}
+					square={false}
+					hasLine={false}
+					renderItem={item => (
+					  <Flex className="group-item" justify="around" key={item.id}>
+						  <div className="desc">
+							  <p className="title">{item.title}</p>
+							  <span className="info">{item.desc}</span>
+						  </div>
+						  <img src={`http://192.168.199.181:8080${item.imgSrc}`} alt=""/>
+					  </Flex>
+					)}
+				  />
+			  </div>
+
+			  {/* 最新资讯 */}
+			  <div className="news">
+				  <h3 className="group-title">最新资讯</h3>
+				  <WingBlank size="md">{this.renderNews()}</WingBlank>
 			  </div>
 		  </div>
 		)
