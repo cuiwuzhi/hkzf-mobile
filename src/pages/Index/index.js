@@ -8,6 +8,8 @@ import Nav2 from '../../assets/images/nav-2.png'
 import Nav3 from '../../assets/images/nav-3.png'
 import Nav4 from '../../assets/images/nav-4.png'
 
+
+axios.defaults.baseURL = 'http://192.168.199.181:8080'
 // 导航菜单数据
 const navs = [
 	{id: 1, img: Nav1, title: '整租', path: '/home/findHouse'},
@@ -22,7 +24,8 @@ export default class Index extends React.Component {
 		swipers: [], // 轮播图数据
 		isSwiperLoaded: false, // 轮播图数据是否加载完成
 		groups: [], // 租房小组数据
-		news: [] // 新闻资讯数据
+		news: [], // 新闻资讯数据
+		currentCityName: '上海' // 当前城市名称
 	}
 
 	componentDidMount() {
@@ -30,15 +33,18 @@ export default class Index extends React.Component {
 		this.getGroups()
 		this.getNews()
 
-		const myCity = new window.BMap.LocalCity();
-		myCity.get(res => {
-			console.log(res)
+		const curCity = new window.BMap.LocalCity()
+		curCity.get(async res => {
+			const result = await axios.get(`/area/info?name=${res.name}`)
+			this.setState({
+				currentCityName: result.data.body.label
+			})
 		});
 	}
 
 	// 获取轮播图
 	async getSwipers() {
-		const {data: res} = await axios.get('http://192.168.199.181:8080/home/swiper')
+		const {data: res} = await axios.get('/home/swiper')
 		this.setState({
 			swipers: res.body,
 			isSwiperLoaded: true
@@ -47,7 +53,7 @@ export default class Index extends React.Component {
 
 	// 获取租房小组的数据
 	async getGroups() {
-		const {data: res} = await axios.get('http://192.168.199.181:8080/home/groups', {
+		const {data: res} = await axios.get('/home/groups', {
 			params: {
 				area: 'AREA|88cff55c-aaa4-e2e0'
 			}
@@ -127,7 +133,7 @@ export default class Index extends React.Component {
 					  <Flex className="search">
 						  {/* 位置 */}
 						  <div className="location" onClick={() => this.props.history.push('/citylist')}>
-							  <span className="name">上海</span>
+							  <span className="name">{this.state.currentCityName}</span>
 							  <i className="iconfont icon-arrow"/>
 						  </div>
 						  {/* 搜索表单 */}
