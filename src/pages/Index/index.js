@@ -2,6 +2,7 @@ import React from 'react'
 import {Carousel, Flex, Grid, WingBlank} from 'antd-mobile'
 import './index.scss'
 import axios from 'axios'
+import {getCurrentCity} from '../../utils'
 // 导航栏图片
 import Nav1 from '../../assets/images/nav-1.png'
 import Nav2 from '../../assets/images/nav-2.png'
@@ -28,18 +29,15 @@ export default class Index extends React.Component {
 		currentCityName: '上海' // 当前城市名称
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		this.getSwipers()
 		this.getGroups()
 		this.getNews()
 
-		const curCity = new window.BMap.LocalCity()
-		curCity.get(async res => {
-			const result = await axios.get(`/area/info?name=${res.name}`)
-			this.setState({
-				currentCityName: result.data.body.label
-			})
-		});
+		const localCity = await getCurrentCity()
+		this.setState({
+			currentCityName: localCity.label
+		})
 	}
 
 	// 获取轮播图
